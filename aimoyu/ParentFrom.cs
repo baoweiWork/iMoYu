@@ -29,8 +29,10 @@ namespace aimoyu
             string name = e.Node.Name;
             if (name == "soBook")
             {
-                SoBook objForm = new SoBook();
-                objForm.sFrom = this.ShowForm;
+                SoBook objForm = new SoBook
+                {
+                    sFrom = this.ShowForm
+                };
                 ShowForm(objForm);
                 currentForm = objForm;
             }
@@ -40,7 +42,12 @@ namespace aimoyu
             }
             else if (name == "historyBook")
             {
-                
+                SoHistory objForm = new SoHistory
+                {
+                    sFrom = this.ShowForm
+                };
+                ShowForm(objForm);
+                currentForm = objForm;
             }
         }
         /// <summary>

@@ -11,24 +11,35 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static aimoyu.ParentFrom;
 
 namespace aimoyu
 {
     public partial class SoContent : Form
     {
         List<string> chapterList = null;
-        loading loading = new loading();
         XmlServices xmlService = new XmlServices();
         string newurl = "";
-        public SoContent(string url,List<string> list)
+        string mainurl = "";
+        /// <summary>
+        /// 章节URL
+        /// </summary>
+        public string titleUrl = "";
+        /// <summary>
+        /// 搜索书名
+        /// </summary>
+        public string bookName = "";
+        //实例化一个委托
+        public showForm sFrom;
+        public SoContent(string url2,string url,List<string> list)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             chapterList = list;
             newurl = url;
-            loading.Show();
+            mainurl = url2;
+            PublicServices.MessageBoxShow();
             load(url);
-            loading.Hide();
         }
 
         // 上一章
@@ -77,8 +88,9 @@ namespace aimoyu
                 string content = headNode.InnerHtml.Replace("&nbsp;", "");
                 content=content.Replace("<script>app2();</script><br><script>read2();</script>", "");
                 content = content.Replace("<br><br>", "    \r\n");
-                
+                content = content.Replace("<br>", "        ");
                 this.txt_Content.Text = content;
+                XmlServices.EditViceDirectory(mainurl,this.lbl_Title.Text, url);
                 SetStyle();
             }
             catch (Exception ex)
@@ -193,6 +205,34 @@ namespace aimoyu
             //设置字体及前景色
             this.txt_Content.Font = xmlService.ObtainFont();
             this.txt_Content.ForeColor = xmlService.ObtainForeColor();
+        }
+
+        // 返回
+        private void BtnReturn_Click(object sender, EventArgs e)
+        {
+            if (titleUrl == "")
+                return;
+            SoTitle objForm = new SoTitle(titleUrl)
+            {
+                sFrom = sFrom,
+                bookName = bookName
+            };
+            //再主窗体中加载  章节窗体
+            sFrom?.Invoke(objForm);
+            this.Close();
+        }
+        // 自定义背景色
+        private void LkColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try {
+                Color color = ColorTranslator.FromHtml("#" + txtColor.Text.Trim().Replace("#", ""));
+                this.txt_Content.BackColor = color;
+                xmlService.SaveBackgroundColor(color);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("颜色格式不正确", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

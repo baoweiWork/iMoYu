@@ -1,4 +1,5 @@
 ﻿using aimoyu.DbHelp;
+using aimoyu.Services;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,24 @@ namespace aimoyu
 {
     public partial class SoTitle : Form
     {
-        List<string> zhangjielist = new List<string>();
-        loading loading = new loading();
+        List<string> titleList = new List<string>();
+        /// <summary>
+        /// 章节URL
+        /// </summary>
+        public string titleUrl = "";
+        /// <summary>
+        /// 搜索书名
+        /// </summary>
+        public string bookName = "";
         //实例化一个委托
         public showForm sFrom;
         public SoTitle(string url)
         {
             this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
-            loading.Show();
+            PublicServices.MessageBoxShow();
+            titleUrl = url;
             load(url);
-            loading.Hide();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,9 +46,16 @@ namespace aimoyu
                 if (indexes.Count > 0)
                 {
                     int index = indexes[0];
-                    string sPartName = this.listView1.Items[index].SubItems[2].Text;//获取第4列的值
+                    string sPartNames = this.listView1.Items[index].SubItems[1].Text;//获取第2列的值
+                    string sPartName = this.listView1.Items[index].SubItems[2].Text;//获取第3列的值
+                    XmlServices.EditViceDirectory(titleUrl, sPartNames, sPartName);
                     this.Close();
-                    SoContent objForm = new SoContent(sPartName, zhangjielist);
+                    SoContent objForm = new SoContent(titleUrl, sPartName, titleList)
+                    {
+                        titleUrl = titleUrl,
+                        sFrom = sFrom,
+                        bookName = bookName
+                    };
                     //再主窗体中加载  章节窗体
                     sFrom?.Invoke(objForm);
                 }
@@ -65,11 +80,10 @@ namespace aimoyu
                 foreach (var item in aCollection)
                 {
                     ListViewItem tt = new ListViewItem();
-                    
                     tt.SubItems[0].Text=i.ToString();
                     tt.SubItems.Add(item.InnerText);
                     tt.SubItems.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
-                    zhangjielist.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
+                    titleList.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
                     this.listView1.Items.Add(tt);
                     i++;
                 }
@@ -79,6 +93,21 @@ namespace aimoyu
                 MessageBox.Show("操作失败！\n" + ex.Message, "提示", MessageBoxButtons.OK,
                                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
+        }
+
+        // 返回
+        private void ToolBtnReturn_Click(object sender, EventArgs e)
+        {
+            if (bookName == "")
+                return;
+            SoBook objForm = new SoBook
+            {
+                sFrom = sFrom,
+                bookName = bookName
+            };
+            this.Close();
+            //再主窗体中加载  章节窗体
+            sFrom?.Invoke(objForm);
         }
     }
 }

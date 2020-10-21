@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBookName = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.listTitle = new System.Windows.Forms.ListView();
             this.number = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -47,12 +47,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "标题";
             // 
-            // textBox1
+            // txtBookName
             // 
-            this.textBox1.Location = new System.Drawing.Point(42, 14);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(207, 21);
-            this.textBox1.TabIndex = 1;
+            this.txtBookName.Location = new System.Drawing.Point(42, 14);
+            this.txtBookName.Name = "txtBookName";
+            this.txtBookName.Size = new System.Drawing.Size(207, 21);
+            this.txtBookName.TabIndex = 1;
             // 
             // btnSearch
             // 
@@ -112,10 +112,11 @@
             this.ClientSize = new System.Drawing.Size(712, 450);
             this.Controls.Add(this.listTitle);
             this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtBookName);
             this.Controls.Add(this.label1);
             this.Name = "SoBook";
             this.Text = "爱搜索";
+            this.Shown += new System.EventHandler(this.SoBook_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,7 +125,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBookName;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.ListView listTitle;
         private System.Windows.Forms.ColumnHeader number;

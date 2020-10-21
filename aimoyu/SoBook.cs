@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using aimoyu.Services;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,21 +16,26 @@ namespace aimoyu
 {
     public partial class SoBook : Form
     {
-        loading loading = new loading();
         public SoBook()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
+            
         }
+
+        /// <summary>
+        /// 搜索书名
+        /// </summary>
+        public string bookName = "";
         //实例化一个委托
         public showForm sFrom;
         private void btnSearck_Click(object sender, EventArgs e)
         {
             try
             {
-                loading.Show();
+                PublicServices.MessageBoxShow();
                 this.listTitle.Items.Clear();
-                var title = this.textBox1.Text;
+                var title = this.txtBookName.Text;
                 string url = "https://so.biqusoso.com/s.php?ie=utf-8&siteid=biqukan.com&q=" + title;
                 HtmlWeb web = new HtmlWeb();
                 //从url中加载
@@ -53,7 +59,6 @@ namespace aimoyu
                     this.listTitle.Items.Add(tt);
                     i++;
                 }
-                loading.Hide();
             }
             catch (Exception ex)
             {
@@ -70,15 +75,16 @@ namespace aimoyu
                 if (indexes.Count > 0)
                 {
                     int index = indexes[0];
+                    string stitleName = this.listTitle.Items[index].SubItems[1].Text;//获取第2列的值
                     string sPartName = this.listTitle.Items[index].SubItems[3].Text;//获取第4列的值
-
-                    XmlDocument doc = new XmlDocument();//创建一个XML文档
-                    XmlReaderSettings settings = new XmlReaderSettings();//设置读取XML时的属性。
-                    settings.IgnoreComments = true;//XML忽略注释。
-
+                    XmlServices.AddHomeDirectory(stitleName, sPartName);
+                    SoTitle objForm = new SoTitle(sPartName)
+                    {
+                        titleUrl = sPartName,
+                        bookName = this.txtBookName.Text,
+                        sFrom = sFrom
+                    };
                     this.Close();
-                    SoTitle objForm = new SoTitle(sPartName);
-                    objForm.sFrom = sFrom;
                     //再主窗体中加载  章节窗体
                     sFrom?.Invoke(objForm);
                 }
@@ -87,6 +93,15 @@ namespace aimoyu
             {
                 MessageBox.Show("操作失败！\n" + ex.Message, "提示", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
+        }
+
+        private void SoBook_Shown(object sender, EventArgs e)
+        {
+            if (bookName != "")
+            {
+                this.txtBookName.Text = bookName;
+                btnSearck_Click(sender, e);
             }
         }
     }

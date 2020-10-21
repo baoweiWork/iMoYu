@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("我要搜书");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("我的书架");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("历史记录");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("我要搜书");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("我的书架");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("历史记录");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParentFrom));
             this.spContainer = new System.Windows.Forms.SplitContainer();
             this.treeTitle = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.spContainer)).BeginInit();
@@ -57,16 +58,16 @@
             this.treeTitle.ForeColor = System.Drawing.SystemColors.WindowText;
             this.treeTitle.Location = new System.Drawing.Point(3, 3);
             this.treeTitle.Name = "treeTitle";
-            treeNode1.Name = "soBook";
-            treeNode1.Text = "我要搜书";
-            treeNode2.Name = "myBook";
-            treeNode2.Text = "我的书架";
-            treeNode3.Name = "historyBook";
-            treeNode3.Text = "历史记录";
+            treeNode4.Name = "soBook";
+            treeNode4.Text = "我要搜书";
+            treeNode5.Name = "myBook";
+            treeNode5.Text = "我的书架";
+            treeNode6.Name = "historyBook";
+            treeNode6.Text = "历史记录";
             this.treeTitle.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.treeTitle.Size = new System.Drawing.Size(120, 444);
             this.treeTitle.TabIndex = 1;
             this.treeTitle.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeTitle_NodeMouseClick);
@@ -78,9 +79,10 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.treeTitle);
             this.Controls.Add(this.spContainer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "ParentFrom";
-            this.Text = "爱阅读";
+            this.Text = "爱摸鱼";
             ((System.ComponentModel.ISupportInitialize)(this.spContainer)).EndInit();
             this.spContainer.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -62,12 +62,19 @@
     <Compile Include="ParentFrom.Designer.cs">
       <DependentUpon>ParentFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\PublicServices.cs" />
     <Compile Include="Services\XmlServices.cs" />
     <Compile Include="SoBook.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SoBook.Designer.cs">
       <DependentUpon>SoBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SoHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SoHistory.Designer.cs">
+      <DependentUpon>SoHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="SoTitle.cs">
       <SubType>Form</SubType>
@@ -98,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SoBook.resx">
       <DependentUpon>SoBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SoHistory.resx">
+      <DependentUpon>SoHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SoTitle.resx">
       <DependentUpon>SoTitle.cs</DependentUpon>

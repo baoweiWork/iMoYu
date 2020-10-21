@@ -11,9 +11,9 @@ namespace aimoyu.Services
 {
     public class XmlServices
     {
-        public static string SetUpXmlPath = "C:/Program Files (x86)/SetUp.xml";
+        public static string SetUpXmlPath = "D:/SetUp.xml";
+        public static string HistoryXmlPath = "D:/HistoryBrowsing.xml";
 
-        public static string HistoryXmlPath = "";
         #region  用户设置
         /// <summary>
         /// 记录用户设置的XML路径
@@ -181,6 +181,146 @@ namespace aimoyu.Services
         #endregion
 
         #region 历史记录
+
+        //获取当前用户所有浏览历史
+
+        public static List<Chapter> GetAllChapter()
+        {
+            if (IsCreate())
+            {
+                XmlDocument doc = new XmlDocument(); //加载xml文件
+                doc.Load(HistoryXmlPath);
+                List<Chapter> list = new List<Chapter>();
+                XmlNodeList dt = doc.SelectNodes("/dt/td");
+                foreach (XmlNode item in dt)
+                {
+                    Chapter cp = new Chapter();
+                    cp.title = item.FirstChild.InnerText;
+                    cp.path = item.FirstChild.NextSibling.InnerText;
+                    cp.history = item.FirstChild.NextSibling.NextSibling.InnerText;
+                    cp.historyurl = item.FirstChild.NextSibling.NextSibling.NextSibling.InnerText;
+                    list.Add(cp);
+                }
+                return list;
+            }
+            else
+            {
+                return new List<Chapter>();
+            }
+           
+        }
+
+        public class Chapter
+        {
+            public string title { get; set; }
+            public string path { get; set; }
+            public string history { get; set; }
+            public string historyurl { get; set; }
+        }
+
+        /// <summary>
+        /// 新增小说名称及主路径
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="path"></param>
+        public static void AddHomeDirectory(string title, string path)
+        {
+            if (!IsCreate())
+            {
+                //创建添加
+                XmlDocument xmlDoc = new XmlDocument();
+                //加入XML的声明段落 
+                XmlNode xmlnode = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
+                xmlDoc.AppendChild(xmlnode);
+                //加入一个根元素 
+                XmlElement xmlelem = xmlDoc.CreateElement("dt");
+                XmlElement xmltd= xmlDoc.CreateElement("td");
+                XmlElement xmltitle = xmlDoc.CreateElement("title");
+                xmltitle.InnerText = title;
+                XmlElement xmlpath = xmlDoc.CreateElement("path");
+                xmlpath.InnerText = path;
+                XmlElement xmlhistory = xmlDoc.CreateElement("history");
+                xmlhistory.InnerText = "";
+                XmlElement xmlhistoryurl = xmlDoc.CreateElement("historyurl");
+                xmlhistoryurl.InnerText = "";
+                xmltd.AppendChild(xmltitle);
+                xmltd.AppendChild(xmlpath);
+                xmltd.AppendChild(xmlhistory);
+                xmltd.AppendChild(xmlhistoryurl);
+                xmlelem.AppendChild(xmltd);
+                xmlDoc.AppendChild(xmlelem);
+                xmlDoc.Save(HistoryXmlPath);
+            }
+            else
+            {
+                XmlDocument xdocument = new XmlDocument(); //加载xml文件
+                xdocument.Load(HistoryXmlPath);
+                XmlNodeList nodtlist = xdocument.SelectNodes("/dt/td/path");
+                bool isfind = false;
+                foreach (XmlNode item in nodtlist)
+                {
+                    if (item.LastChild.InnerText== path)
+                    {
+                        isfind = true;
+                    }
+                }
+                if (!isfind)
+                {
+                    //加入一个根元素 
+                    XmlElement xmltd = xdocument.CreateElement("td");
+                    XmlElement xmltitle = xdocument.CreateElement("title");
+                    xmltitle.InnerText = title;
+                    XmlElement xmlpath = xdocument.CreateElement("path");
+                    xmlpath.InnerText = path;
+                    XmlElement xmlhistory = xdocument.CreateElement("history");
+                    xmlhistory.InnerText = "";
+                    XmlElement xmlhistoryurl = xdocument.CreateElement("historyurl");
+                    xmlhistoryurl.InnerText = "";
+                    xmltd.AppendChild(xmltitle);
+                    xmltd.AppendChild(xmlpath);
+                    xmltd.AppendChild(xmlhistory);
+                    xmltd.AppendChild(xmlhistoryurl);
+                    xdocument.DocumentElement.AppendChild(xmltd);
+                    xdocument.Save(HistoryXmlPath);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 修改小说章节名称及路径
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="history"></param>
+        /// <param name="historyurl"></param>
+        /// <returns></returns>
+        public static void EditViceDirectory(string path, string history,string historyurl)
+        {
+            if (IsCreate())
+            {
+                XmlDocument xdocument = new XmlDocument(); //加载xml文件
+                xdocument.Load(HistoryXmlPath);
+                XmlNodeList nodtlist = xdocument.SelectNodes("/dt/td/path");
+                foreach (XmlNode item in nodtlist)
+                {
+                    if (item.LastChild.InnerText == path)
+                    {
+                        item.NextSibling.InnerText = history;
+                        item.NextSibling.NextSibling.InnerText = historyurl;
+                        xdocument.Save(HistoryXmlPath);
+                    }
+                }
+            }
+        }
+
+        //是否存在历史记录xml文件
+
+        public static bool IsCreate()
+        {
+            return System.IO.File.Exists(HistoryXmlPath);
+        }
+
+
         #endregion
     }
 }
