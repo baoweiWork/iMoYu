@@ -50,72 +50,65 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbHelp\HttpHelper.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Model\ChapterModel.cs" />
+    <Compile Include="UI\ParentFrom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ParentFrom.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ParentFrom.Designer.cs">
+    <Compile Include="UI\ParentFrom.Designer.cs">
       <DependentUpon>ParentFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\PublicServices.cs" />
+    <Compile Include="Services\ThreadServices.cs" />
     <Compile Include="Services\XmlServices.cs" />
-    <Compile Include="SoBook.cs">
+    <Compile Include="UI\SoBook.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SoBook.Designer.cs">
+    <Compile Include="UI\SoBook.Designer.cs">
       <DependentUpon>SoBook.cs</DependentUpon>
     </Compile>
-    <Compile Include="SoHistory.cs">
+    <Compile Include="UI\SoContent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SoHistory.Designer.cs">
-      <DependentUpon>SoHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SoTitle.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SoTitle.Designer.cs">
-      <DependentUpon>SoTitle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SoContent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SoContent.Designer.cs">
+    <Compile Include="UI\SoContent.Designer.cs">
       <DependentUpon>SoContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="loading.cs">
+    <Compile Include="UI\SoHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="loading.Designer.cs">
+    <Compile Include="UI\SoHistory.Designer.cs">
+      <DependentUpon>SoHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SoTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SoTitle.Designer.cs">
+      <DependentUpon>SoTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\loading.Designer.cs">
       <DependentUpon>loading.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DbHelp\XMLDBhelp.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ParentFrom.resx">
+    <EmbeddedResource Include="UI\ParentFrom.resx">
       <DependentUpon>ParentFrom.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SoBook.resx">
+    <EmbeddedResource Include="UI\SoBook.resx">
       <DependentUpon>SoBook.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SoHistory.resx">
-      <DependentUpon>SoHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SoTitle.resx">
-      <DependentUpon>SoTitle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SoContent.resx">
+    <EmbeddedResource Include="UI\SoContent.resx">
       <DependentUpon>SoContent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="loading.resx">
+    <EmbeddedResource Include="UI\SoHistory.resx">
+      <DependentUpon>SoHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SoTitle.resx">
+      <DependentUpon>SoTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\loading.resx">
       <DependentUpon>loading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -142,11 +135,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XML\HistoryBrowsing.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="XML\SetUp.xml" />
+    <Folder Include="XML\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

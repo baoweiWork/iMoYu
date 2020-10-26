@@ -1,4 +1,5 @@
-﻿using System;
+﻿using aimoyu.Model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -184,45 +185,39 @@ namespace aimoyu.Services
 
         //获取当前用户所有浏览历史
 
-        public static List<Chapter> GetAllChapter()
+        public static List<ChapterModel> GetAllChapter()
         {
             if (IsCreate())
             {
                 XmlDocument doc = new XmlDocument(); //加载xml文件
                 doc.Load(HistoryXmlPath);
-                List<Chapter> list = new List<Chapter>();
+                List<ChapterModel> list = new List<ChapterModel>();
                 XmlNodeList dt = doc.SelectNodes("/dt/td");
                 foreach (XmlNode item in dt)
                 {
-                    Chapter cp = new Chapter();
-                    cp.title = item.FirstChild.InnerText;
-                    cp.path = item.FirstChild.NextSibling.InnerText;
-                    cp.history = item.FirstChild.NextSibling.NextSibling.InnerText;
-                    cp.historyurl = item.FirstChild.NextSibling.NextSibling.NextSibling.InnerText;
+                    ChapterModel cp = new ChapterModel
+                    {
+                        Title = item.FirstChild.InnerText,
+                        Path = item.FirstChild.NextSibling.InnerText,
+                        History = item.FirstChild.NextSibling.NextSibling.InnerText,
+                        Historyurl = item.FirstChild.NextSibling.NextSibling.NextSibling.InnerText
+                    };
                     list.Add(cp);
                 }
                 return list;
             }
             else
             {
-                return new List<Chapter>();
+                return new List<ChapterModel>();
             }
            
-        }
-
-        public class Chapter
-        {
-            public string title { get; set; }
-            public string path { get; set; }
-            public string history { get; set; }
-            public string historyurl { get; set; }
         }
 
         /// <summary>
         /// 新增小说名称及主路径
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="path"></param>
+        /// <param name="title">小说名称</param>
+        /// <param name="path">小说主路径</param>
         public static void AddHomeDirectory(string title, string path)
         {
             if (!IsCreate())
@@ -290,9 +285,9 @@ namespace aimoyu.Services
         /// <summary>
         /// 修改小说章节名称及路径
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="history"></param>
-        /// <param name="historyurl"></param>
+        /// <param name="path">小说主路径</param>
+        /// <param name="history">章节名称</param>
+        /// <param name="historyurl">章节路径</param>
         /// <returns></returns>
         public static void EditViceDirectory(string path, string history,string historyurl)
         {
