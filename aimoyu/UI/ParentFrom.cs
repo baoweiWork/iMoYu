@@ -18,7 +18,9 @@ namespace aimoyu.UI
         public Form currentForm;
         //声明一个委托
         public delegate void showForm(Form frm);
-   
+        //声明一个委托
+        public delegate void parentShow(bool bol);
+
         public ParentFrom()
         {
             InitializeComponent();
@@ -32,7 +34,8 @@ namespace aimoyu.UI
             {
                 SoBook objForm = new SoBook
                 {
-                    sFrom = this.ShowForm
+                    sFrom = this.ShowForm,
+                    pShow=this.ParentShowHide
                 };
                 ShowForm(objForm);
                 currentForm = objForm;
@@ -45,7 +48,8 @@ namespace aimoyu.UI
             {
                 SoHistory objForm = new SoHistory
                 {
-                    sFrom = this.ShowForm
+                    sFrom = this.ShowForm,
+                    pShow = this.ParentShowHide
                 };
                 ShowForm(objForm);
                 currentForm = objForm;
@@ -88,8 +92,18 @@ namespace aimoyu.UI
                 }
             }
         }
-
-        // 调整空间大小时触发
+        /// <summary>
+        /// 隐藏与展示窗体 true隐藏 false显示
+        /// </summary>
+        /// <param name="bol"></param>
+        private void ParentShowHide(bool bol)
+        {
+            if (bol)
+                this.Hide();
+            else
+                this.Show();
+        }
+            // 调整空间大小时触发
         private void ParentFrom_Resize(object sender, EventArgs e)
         {
             this.spContainer.SplitterDistance = 140;

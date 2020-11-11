@@ -56,6 +56,7 @@
             this.TitleListView.TabIndex = 0;
             this.TitleListView.UseCompatibleStateImageBehavior = false;
             this.TitleListView.View = System.Windows.Forms.View.Details;
+            this.TitleListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.TitleListView_ColumnClick);
             this.TitleListView.SelectedIndexChanged += new System.EventHandler(this.TitleListView_SelectedIndexChanged);
             // 
             // columnHeader1

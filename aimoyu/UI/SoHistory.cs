@@ -22,9 +22,12 @@ namespace aimoyu.UI
             this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
         }
-
+        PublicServices ps = new PublicServices();
         //实例化一个委托
         public showForm sFrom;
+        //实例化一个委托
+        public parentShow pShow;
+        CountdownEvent latch;
 
         private List<string> zhangjielist = null;
 
@@ -32,11 +35,12 @@ namespace aimoyu.UI
         {
             try
             {
-                PublicServices.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
+                ps.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
                 var list = XmlServices.GetAllChapter();
                 this.listTitle.RowHeadersVisible = false;
                 this.listTitle.AutoGenerateColumns = false;
                 this.listTitle.DataSource = list;
+                ps.MessageBoxClose();
             }
             catch (Exception ex)
             {
@@ -51,9 +55,9 @@ namespace aimoyu.UI
             int rowindex =e.RowIndex;
             //1章节2内容
             int comIndex = e.ColumnIndex;
-            if (rowindex > 0&& comIndex!=0)
+            if (rowindex >= 0&& comIndex!=0)
             {
-                PublicServices.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
+                ps.MessageBoxShow(this.PointToScreen(new Point(0, 0)),"正在获取目录,请稍后...");
                 string bookName = listTitle.CurrentRow.Cells["Title"].Value.ToString();//获取书名
                 string pathurl = listTitle.CurrentRow.Cells["Path"].Value.ToString();//获取目录URL
                 string contentUrl = listTitle.CurrentRow.Cells["Historyurl"].Value.ToString();//获取具体内容URL
@@ -65,7 +69,8 @@ namespace aimoyu.UI
                     {
                         sFrom = sFrom,
                         titleUrl= pathurl,
-                        bookName= bookName
+                        bookName= bookName,
+                        pShow = pShow
                     };
                     //再主窗体中加载  章节窗体
                     sFrom?.Invoke(objForm);
@@ -75,6 +80,7 @@ namespace aimoyu.UI
                 {
                     if (contentUrl == "")
                         return;
+                    latch = new CountdownEvent(1);
                     //创建TestClass类的对象 
                     ThreadServices threadClass = new ThreadServices()
                     {
@@ -84,16 +90,10 @@ namespace aimoyu.UI
                     //启动线程，启动之后线程才开始执行 
                     void starter() { threadClass.QueryData(pathurl); }
                     new Thread(starter).Start();
-                    SoContent objForm = new SoContent
-                    {
-                        catalogUrl = pathurl,
-                        contentUrl = contentUrl,
-                        chapterList = zhangjielist,
-                        bookName = bookName
-                    };
-                    //再主窗体中加载  章节窗体
-                    sFrom?.Invoke(objForm);
+                    latch.Wait();
+                    ThreadRefund(pathurl, contentUrl, bookName);
                 }
+                ps.MessageBoxClose();
                 this.Close();
             }
         }
@@ -111,8 +111,8 @@ namespace aimoyu.UI
             {
                 zhangjielist.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
             }
+            latch.Signal();
         }
-
         //添加序号
         private void ListTitle_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -120,6 +120,20 @@ namespace aimoyu.UI
             {
                 row.Cells[0].Value = row.Index + 1;
             }
+        }
+        private void ThreadRefund(string pathurl,string contentUrl,string bookName) {
+           
+            SoContent objForm = new SoContent
+            {
+                catalogUrl = pathurl,
+                contentUrl = contentUrl,
+                chapterList = zhangjielist,
+                bookName = bookName,
+                sFrom = sFrom,
+                pShow = pShow
+            };
+            //再主窗体中加载  章节窗体
+            sFrom?.Invoke(objForm);
         }
     }
 }

@@ -16,13 +16,13 @@
         "Entry"
         {
         "MsmKey" = "8:_1F206970E732491F5CF90890E8D12318"
-        "OwnerKey" = "8:_EC8F0D7604FFD9317579B082B7CB89E7"
+        "OwnerKey" = "8:_3751132A0E06470AAA111A4B9A4D1CC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1F206970E732491F5CF90890E8D12318"
-        "OwnerKey" = "8:_3751132A0E06470AAA111A4B9A4D1CC3"
+        "OwnerKey" = "8:_EC8F0D7604FFD9317579B082B7CB89E7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AB829DC8D7F149FB8B207C64F3006C22"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B426E11932814FA79A38407BCEEF708E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -75,12 +81,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EC69FE16B34F45EFA4DDA7F2D98E66F1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_EC8F0D7604FFD9317579B082B7CB89E7"
         "OwnerKey" = "8:_7A837340990747028DB2BD82539C8114"
         "MsmSig" = "8:_UNDEFINED"
@@ -94,12 +94,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3751132A0E06470AAA111A4B9A4D1CC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7A837340990747028DB2BD82539C8114"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -107,6 +101,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_EC8F0D7604FFD9317579B082B7CB89E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3751132A0E06470AAA111A4B9A4D1CC3"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -166,6 +166,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -349,6 +357,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AB829DC8D7F149FB8B207C64F3006C22"
+            {
+            "SourcePath" = "8:..\\aimoyu\\bin\\Debug\\aimoyu.ico"
+            "TargetName" = "8:aimoyu.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B426E11932814FA79A38407BCEEF708E"
             {
             "SourcePath" = "8:..\\aimoyu\\bin\\Debug\\HtmlAgilityPack.xml"
@@ -393,26 +421,6 @@
             {
             "SourcePath" = "8:..\\aimoyu\\bin\\Debug\\HtmlAgilityPack.pdb"
             "TargetName" = "8:HtmlAgilityPack.pdb"
-            "Tag" = "8:"
-            "Folder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EC69FE16B34F45EFA4DDA7F2D98E66F1"
-            {
-            "SourcePath" = "8:..\\aimoyu\\bin\\Debug\\aimoyu.ico"
-            "TargetName" = "8:aimoyu.ico"
             "Tag" = "8:"
             "Folder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
             "Condition" = "8:"
@@ -637,9 +645,9 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_08F492FED94141E480EE32435DEF3385"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_26F273B90CBA45E3BB06C16DD9328B95"
             {
-            "Name" = "8:爱摸鱼.exe"
+            "Name" = "8:爱摸鱼"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -648,26 +656,12 @@
             "Target" = "8:_7A837340990747028DB2BD82539C8114"
             "Folder" = "8:_E262E199B3184DE0BB7BF1068F5CF17A"
             "WorkingFolder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
-            "Icon" = "8:_EC69FE16B34F45EFA4DDA7F2D98E66F1"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3D18AC91A0BF4A26B73147A70B6BEC01"
-            {
-            "Name" = "8:爱摸鱼.exe"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_7A837340990747028DB2BD82539C8114"
-            "Folder" = "8:_1E0431C25DE94D059C56CD7951610713"
-            "WorkingFolder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
-            "Icon" = "8:_EC69FE16B34F45EFA4DDA7F2D98E66F1"
+            "Icon" = "8:_AB829DC8D7F149FB8B207C64F3006C22"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8551FF382A854DDEB60436A3CEA49445"
             {
-            "Name" = "8:卸载爱摸鱼.exe"
+            "Name" = "8:卸载爱摸鱼"
             "Arguments" = "8:/X {3499DB24-A3F1-409C-BE79-888C22A39149}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -681,7 +675,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A296D4F5A6C14973B5F430D55CB8678E"
             {
-            "Name" = "8:卸载爱摸鱼.exe"
+            "Name" = "8:卸载爱摸鱼"
             "Arguments" = "8:/X {3499DB24-A3F1-409C-BE79-888C22A39149}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -691,6 +685,20 @@
             "Folder" = "8:_E262E199B3184DE0BB7BF1068F5CF17A"
             "WorkingFolder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
             "Icon" = "8:_C6B7F0E3E1774071ACA971A9152A9B53"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D2E6314EF77C409D8042A9BD817D0E23"
+            {
+            "Name" = "8:爱摸鱼"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_7A837340990747028DB2BD82539C8114"
+            "Folder" = "8:_1E0431C25DE94D059C56CD7951610713"
+            "WorkingFolder" = "8:_B3853CB093584EC9B6B79BCB3D2A9AD9"
+            "Icon" = "8:_AB829DC8D7F149FB8B207C64F3006C22"
             "Feature" = "8:"
             }
         }

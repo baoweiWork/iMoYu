@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lbl_text = new System.Windows.Forms.Label();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lbl_text
@@ -43,10 +41,6 @@
             this.lbl_text.Size = new System.Drawing.Size(157, 17);
             this.lbl_text.TabIndex = 1;
             this.lbl_text.Text = "正在加载,请稍后...";
-            // 
-            // timer
-            // 
-            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // loading
             // 
@@ -67,6 +61,5 @@
 
         #endregion
         private System.Windows.Forms.Label lbl_text;
-        private System.Windows.Forms.Timer timer;
     }
 }

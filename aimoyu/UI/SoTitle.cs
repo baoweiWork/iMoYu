@@ -36,6 +36,8 @@ namespace aimoyu.UI
 
         // 实例化一个委托
         public showForm sFrom;
+        //实例化一个委托
+        public parentShow pShow;
         public SoTitle()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -53,15 +55,17 @@ namespace aimoyu.UI
                 {
                     int index = indexes[0];
                     string sPartNames = this.TitleListView.Items[index].SubItems[1].Text;//章节名称
-                    string titleUrl = this.TitleListView.Items[index].SubItems[2].Text;//内容地址
-                    XmlServices.EditViceDirectory(titleUrl, sPartNames, titleUrl);
+                    string contentUrl = this.TitleListView.Items[index].SubItems[2].Text;//内容地址
+                    XmlServices.EditViceDirectory(titleUrl, sPartNames, contentUrl);
                     this.Close();
                     SoContent objForm = new SoContent()
                     {
-                        contentUrl = titleUrl,
+                        contentUrl = contentUrl,
+                        catalogUrl= titleUrl,
                         sFrom = sFrom,
                         bookName = bookName,
-                        chapterList = titleList
+                        chapterList = titleList,
+                        pShow=pShow
                     };
                     //再主窗体中加载  章节窗体
                     sFrom?.Invoke(objForm);
@@ -88,7 +92,7 @@ namespace aimoyu.UI
             //再主窗体中加载  章节窗体
             sFrom?.Invoke(objForm);
         }
-
+        PublicServices ps = new PublicServices();
         // 初始加载
         private void SoTitle_Shown(object sender, EventArgs e)
         {
@@ -99,16 +103,11 @@ namespace aimoyu.UI
                     MessageBox.Show("目录章节获取失败");
                     return;
                 }
-                PublicServices.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
-                //创建TestClass类的对象
-                ThreadServices threadClass = new ThreadServices()
-                {
-                    //在testclass对象的mainThread(委托)对象上搭载方法，在线程中调用mainThread对象时相当于调用了这方法。 
-                    mainThread2 = new ThreadServices.WebDataDelegate2(SoTitleData)
-                };
-                //启动线程，启动之后线程才开始执行 
-                void starter() { threadClass.QueryData(); }
-                new Thread(starter).Start();
+                ps.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += BgWorker_DoWork;
+                bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+                bgWorker.RunWorkerAsync();   
             }
             catch (Exception ex)
             {
@@ -116,6 +115,32 @@ namespace aimoyu.UI
                                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
         }
+
+        /// <summary>
+        /// 数据查询之后
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            foreach (var item in listView)
+            {
+                this.TitleListView.Items.Add(item);
+            }
+            listView = null;
+            ps.MessageBoxClose();
+        }
+        /// <summary>
+        /// 后台查询数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            SoTitleData();
+        }
+
+        private List<ListViewItem> listView=new List<ListViewItem>();
 
         // 获取目录章节数据
         private void SoTitleData() {
@@ -125,6 +150,11 @@ namespace aimoyu.UI
             HtmlNode headNode = doc.DocumentNode.SelectSingleNode("//dl");
             HtmlNodeCollection aCollection = headNode.SelectNodes("dd");
             int k = 1;
+            //前12条不展示
+            for (int i = 0; i < 12; i++)
+            {
+                aCollection.Remove(0);
+            }
             foreach (var item in aCollection)
             {
                 ListViewItem tt = new ListViewItem();
@@ -132,9 +162,17 @@ namespace aimoyu.UI
                 tt.SubItems.Add(item.InnerText);
                 tt.SubItems.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
                 titleList.Add(item.SelectNodes("a")[0].Attributes["href"].Value);
-                this.TitleListView.Items.Add(tt);
+                listView.Add(tt);
                 k++;
             }
+        }
+
+        private void TitleListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //for (int i = list.Count; i >0 ; i--)
+            //{
+            //    this.TitleListView.Items.Add(list[i]);
+            //}
         }
     }
 }

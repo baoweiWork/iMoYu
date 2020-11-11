@@ -37,3 +37,4 @@ C:\Users\Administrator\Desktop\爱阅读\wf-novel-reader\aimoyu\obj\Debug\aimoyu
 C:\Users\Administrator\Desktop\爱阅读\wf-novel-reader\aimoyu\obj\Debug\aimoyu.UI.SoHistory.resources
 C:\Users\Administrator\Desktop\爱阅读\wf-novel-reader\aimoyu\obj\Debug\aimoyu.UI.SoTitle.resources
 C:\Users\Administrator\Desktop\爱阅读\wf-novel-reader\aimoyu\obj\Debug\aimoyu.UI.loading.resources
+C:\Users\Administrator\Desktop\爱阅读\wf-novel-reader\aimoyu\obj\Debug\aimoyu.UI.HideFrom.resources

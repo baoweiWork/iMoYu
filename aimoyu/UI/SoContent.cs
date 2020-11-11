@@ -43,6 +43,8 @@ namespace aimoyu.UI
 
         //实例化一个委托
         public showForm sFrom;
+        //实例化一个委托
+        public parentShow pShow;
 
         public SoContent()
         {
@@ -81,22 +83,18 @@ namespace aimoyu.UI
                 LoadQuery();
             }
         }
-
+        PublicServices ps = new PublicServices();
         // 加载数据设置样式
-        public void LoadQuery()
+        public void LoadQuery(bool bol =true)
         {
             try
             {
-                PublicServices.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
-                //创建TestClass类的对象
-                ThreadServices threadClass = new ThreadServices()
-                {
-                    //在testclass对象的mainThread(委托)对象上搭载方法，在线程中调用mainThread对象时相当于调用了这方法。 
-                    mainThread2 = new ThreadServices.WebDataDelegate2(SoContentData)
-                };
-                //启动线程，启动之后线程才开始执行 
-                void starter() { threadClass.QueryData(); }
-                new Thread(starter).Start();
+                if (bol)
+                    ps.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += BgWorker_DoWork;
+                bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+                bgWorker.RunWorkerAsync();
                 SetStyle();
             }
             catch (Exception ex)
@@ -105,6 +103,30 @@ namespace aimoyu.UI
                                  MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
         }
+
+        // <summary>
+        /// 数据查询之后
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            lbl_Title.Text = titleName;
+            this.txt_Content.Text = "";
+            this.txt_Content.Text = content;
+            XmlServices.EditViceDirectory(catalogUrl, this.lbl_Title.Text, contentUrl);
+            ps.MessageBoxClose();
+        }
+        /// <summary>
+        /// 后台查询数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            SoContentData();
+        }
+
 
         /// <summary>
         /// //设置字体
@@ -249,6 +271,18 @@ namespace aimoyu.UI
         {
             LoadQuery();
         }
+        public string  titleName="",content="";
+
+        // 划水模式
+        private void BtnHuaShui_Click(object sender, EventArgs e)
+        {
+            HideFrom hide = new HideFrom(this)
+            {
+                pShow = pShow
+            };
+            hide.Show();
+            pShow(true);
+        }
 
         // 获取章节内容数据并更新历史记录
         private void SoContentData()
@@ -258,18 +292,18 @@ namespace aimoyu.UI
                 this.txt_Content.Text = "内容地址丢失";
                 return;
             }
-            this.txt_Content.Text = "";
+            
             string Html = HttpHelper.GetWebHtml("https://www.biqukan.com" + contentUrl, null);
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(Html);
             HtmlNode headNode = doc.DocumentNode.SelectSingleNode("//div[@id='content']");
-            this.lbl_Title.Text = doc.DocumentNode.SelectSingleNode("//div[@class='content']").SelectNodes("h1")[0].InnerText;
-            string content = headNode.InnerHtml.Replace("&nbsp;", "");
+            titleName = "";
+            titleName = doc.DocumentNode.SelectSingleNode("//div[@class='content']").SelectNodes("h1")[0].InnerText;
+            content = "";
+            content = headNode.InnerHtml.Replace("&nbsp;", "");
             content = content.Replace("<script>app2();</script><br><script>read2();</script>", "");
             content = content.Replace("<br><br>", "    \r\n");
             content = content.Replace("<br>", "        ");
-            this.txt_Content.Text = content;
-            XmlServices.EditViceDirectory(catalogUrl, this.lbl_Title.Text, contentUrl);
         }
     }
 }

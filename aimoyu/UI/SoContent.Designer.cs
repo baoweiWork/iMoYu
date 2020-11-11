@@ -43,12 +43,13 @@
             this.lkColor = new System.Windows.Forms.LinkLabel();
             this.txt_Content = new System.Windows.Forms.RichTextBox();
             this.btnReturn = new System.Windows.Forms.Button();
+            this.btnHuaShui = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(100, 518);
+            this.button1.Location = new System.Drawing.Point(251, 518);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(76, 23);
             this.button1.TabIndex = 1;
@@ -59,7 +60,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(258, 518);
+            this.button2.Location = new System.Drawing.Point(336, 518);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(62, 23);
             this.button2.TabIndex = 2;
@@ -185,11 +186,23 @@
             this.btnReturn.UseVisualStyleBackColor = true;
             this.btnReturn.Click += new System.EventHandler(this.BtnReturn_Click);
             // 
+            // btnHuaShui
+            // 
+            this.btnHuaShui.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnHuaShui.Location = new System.Drawing.Point(12, 518);
+            this.btnHuaShui.Name = "btnHuaShui";
+            this.btnHuaShui.Size = new System.Drawing.Size(76, 23);
+            this.btnHuaShui.TabIndex = 17;
+            this.btnHuaShui.Text = "划水模式";
+            this.btnHuaShui.UseVisualStyleBackColor = true;
+            this.btnHuaShui.Click += new System.EventHandler(this.BtnHuaShui_Click);
+            // 
             // SoContent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 555);
+            this.Controls.Add(this.btnHuaShui);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.lkColor);
             this.Controls.Add(this.txtColor);
@@ -214,7 +227,7 @@
         #endregion
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label lbl_Title;
+        public System.Windows.Forms.Label lbl_Title;
         private System.Windows.Forms.Label lbl_Row;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel lkbtn_RowLarge;
@@ -224,7 +237,8 @@
         private System.Windows.Forms.LinkLabel LinkYellow;
         private System.Windows.Forms.TextBox txtColor;
         private System.Windows.Forms.LinkLabel lkColor;
-        private System.Windows.Forms.RichTextBox txt_Content;
+        public System.Windows.Forms.RichTextBox txt_Content;
         private System.Windows.Forms.Button btnReturn;
+        private System.Windows.Forms.Button btnHuaShui;
     }
 }

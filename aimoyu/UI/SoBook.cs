@@ -21,7 +21,6 @@ namespace aimoyu.UI
         {
             this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
-            
         }
 
         /// <summary>
@@ -31,24 +30,20 @@ namespace aimoyu.UI
 
         //实例化一个委托
         public showForm sFrom;
-
+        //实例化一个委托
+        public parentShow pShow;
+        PublicServices ps = new PublicServices();
         // 搜索
         private void BtnSearck_Click(object sender, EventArgs e)
         {
             try
             {
-                PublicServices.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
-                if (this.listTitle.Items.Count > 0)
-                    this.listTitle.Items.Clear();
-                //创建TestClass类的对象
-                ThreadServices threadClass = new ThreadServices()
-                {
-                    //在testclass对象的mainThread(委托)对象上搭载方法，在线程中调用mainThread对象时相当于调用了这方法。 
-                    mainThread2 = new ThreadServices.WebDataDelegate2(SoBookData)
-                };
-                //启动线程，启动之后线程才开始执行 
-                void starter() { threadClass.QueryData(); }
-                new Thread(starter).Start();
+                
+                ps.MessageBoxShow(this.PointToScreen(new Point(0, 0)));
+                BackgroundWorker bgWorker = new BackgroundWorker();
+                bgWorker.DoWork += BgWorker_DoWork;
+                bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+                bgWorker.RunWorkerAsync();
             }
             catch (Exception ex)
             {
@@ -56,24 +51,48 @@ namespace aimoyu.UI
                                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
         }
+        /// <summary>
+        /// 数据查询之后
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            foreach (var item in listView)
+            {
+                this.listBook.Items.Add(item);
+            }
+            listView = null;
+            ps.MessageBoxClose();
+        }
+        /// <summary>
+        /// 后台查询数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            SoBookData();
+        }
 
         // 选中行更改
         private void ListTitle_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                ListView.SelectedIndexCollection indexes = this.listTitle.SelectedIndices;
+                ListView.SelectedIndexCollection indexes = this.listBook.SelectedIndices;
                 if (indexes.Count > 0)
                 {
                     int index = indexes[0];
-                    string stitleName = this.listTitle.Items[index].SubItems[1].Text;//书名
-                    string sPartName = this.listTitle.Items[index].SubItems[3].Text;//目录地址
+                    string stitleName = this.listBook.Items[index].SubItems[1].Text;//书名
+                    string sPartName = this.listBook.Items[index].SubItems[3].Text;//目录地址
                     XmlServices.AddHomeDirectory(stitleName, sPartName);
                     SoTitle objForm = new SoTitle()
                     {
                         titleUrl = sPartName,
                         bookName = this.txtBookName.Text,
-                        sFrom = sFrom
+                        sFrom = sFrom,
+                        pShow=pShow
                     };
                     this.Close();
                     //再主窗体中加载  章节窗体
@@ -97,6 +116,8 @@ namespace aimoyu.UI
             }
         }
 
+        private List<ListViewItem> listView = new List<ListViewItem>();
+
         // 搜索数据
         private void SoBookData()
         {
@@ -117,7 +138,7 @@ namespace aimoyu.UI
                 tt.SubItems.Add(item.SelectNodes("span")[1].InnerText);
                 tt.SubItems.Add(item.SelectNodes("span")[2].InnerText);
                 tt.SubItems.Add(item.SelectNodes("span")[1].SelectNodes("a")[0].Attributes["href"].Value);
-                this.listTitle.Items.Add(tt);
+                listView.Add(tt);
             }
         }
     }

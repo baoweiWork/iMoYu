@@ -84,6 +84,7 @@ namespace aimoyu.Services
             SetUp.Attribute("Strikeout").Value = font.Strikeout.ToString();
             SetUp.Attribute("Underline").Value = font.Underline.ToString();
             SetUp.Attribute("ForeColor").Value = color.Name;
+
             xdocument.Save(SetUpXmlPath);
         }
 
